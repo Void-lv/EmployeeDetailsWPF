@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeDetailsWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800">
+        Title="MainWindow" Height="600" Width="600">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -81,7 +81,7 @@
                 Grid.ColumnSpan="3"
                 Margin="10"
                 HorizontalAlignment="Left"
-                Visibility="Hidden" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200">
+                Visibility="Hidden" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="500">
 
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ColumnId" Header="ID" Binding="{Binding id}"/>
