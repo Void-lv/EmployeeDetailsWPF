@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:EmployeeDetailsWPF"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <local:NullVisibilityConverter x:Key="NullToVis"/>
     </Application.Resources>
 </Application>

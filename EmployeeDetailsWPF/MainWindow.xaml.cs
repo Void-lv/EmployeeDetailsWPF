@@ -7,6 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 
 
 namespace EmployeeDetailsWPF
@@ -49,9 +50,6 @@ namespace EmployeeDetailsWPF
                 TextBlockMessage.Visibility = Visibility.Collapsed;
                 DataGridEmployees.Visibility = Visibility.Visible;
 
-                ButtonSelectUpdateEmployee.Visibility = Visibility.Visible;
-                ButtonDeleteEmployee.Visibility = Visibility.Visible;
-
             }
             catch (Exception ex)
             {
@@ -90,8 +88,8 @@ namespace EmployeeDetailsWPF
             GridEmployeeDetails.Visibility = Visibility.Visible;
             DataGridEmployees.Visibility = Visibility.Collapsed;
             ButtonSubmitNewEmployee.Visibility = Visibility.Visible;
-            ButtonSelectUpdateEmployee.Visibility = Visibility.Collapsed;
-            ButtonDeleteEmployee.Visibility= Visibility.Collapsed;
+
+            DataGridEmployees.SelectedItem = null;
 
             TextBoxNewName.Text = null;
             TextBoxNewEmail.Text = null;
@@ -138,19 +136,16 @@ namespace EmployeeDetailsWPF
         {
             SelectedEmployee = (Employee)DataGridEmployees.SelectedItem;
 
-            if (SelectedEmployee == null) MessageBox.Show("Please select employee to update");
-            else
-            {
-                TextBoxNewName.Text = SelectedEmployee.name;
-                TextBoxNewEmail.Text = SelectedEmployee.email;
-                ComboBoxStatus.Text = SelectedEmployee.status;
-                ComboBoxGender.Text = SelectedEmployee.gender;
+            TextBoxNewName.Text = SelectedEmployee.name;
+            TextBoxNewEmail.Text = SelectedEmployee.email;
+            ComboBoxStatus.Text = SelectedEmployee.status;
+            ComboBoxGender.Text = SelectedEmployee.gender;
 
-                GridEmployeeDetails.Visibility = Visibility.Visible;
-                DataGridEmployees.Visibility = Visibility.Collapsed;
-                ButtonUpdateEmployee.Visibility = Visibility.Visible;
-                ButtonDeleteEmployee.Visibility = Visibility.Collapsed;
-            }
+            GridEmployeeDetails.Visibility = Visibility.Visible;
+            DataGridEmployees.Visibility = Visibility.Collapsed;
+
+            DataGridEmployees.SelectedItem = null;
+
 
 
         }
@@ -184,9 +179,6 @@ namespace EmployeeDetailsWPF
                 TextBoxNewEmail.Text = null;
                 ComboBoxStatus.Text = null;
                 ComboBoxGender.Text = null;
-
-                GridEmployeeDetails.Visibility = Visibility.Collapsed;
-                ButtonUpdateEmployee.Visibility = Visibility.Collapsed;
 
                 SelectedEmployee = null;
             }

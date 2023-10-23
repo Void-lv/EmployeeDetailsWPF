@@ -38,8 +38,8 @@
 
         <Button x:Name="ButtonSearchEmployee" Content="Search Employee"  Grid.Column="1" Grid.Row="2" Margin="10" Click="ButtonSearchCustomer_Click"/>
         <Button x:Name="ButtonNewEmployee" Content="New Employee"  Grid.Column="1" Grid.Row="3" Margin="10" Click="ButtonNewEmployee_Click"/>
-        <Button x:Name="ButtonSelectUpdateEmployee" Content="Update Employee"  Grid.Column="2" Grid.Row="3" Margin="10" Click="ButtonSelectUpdateEmployee_Click" Visibility="Collapsed"/>
-        <Button x:Name="ButtonDeleteEmployee" Content="Delete Employee" Grid.Column="3" Grid.Row="3" Margin="10" Click="ButtonDeleteEmployee_Click" Visibility="Collapsed"/>
+        <Button x:Name="ButtonSelectUpdateEmployee" Content="Update Employee"  Grid.Column="2" Grid.Row="3" Margin="10" Click="ButtonSelectUpdateEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}, ConverterParameter=Hidden}"/>
+        <Button x:Name="ButtonDeleteEmployee" Content="Delete Employee" Grid.Column="3" Grid.Row="3" Margin="10" Click="ButtonDeleteEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}}"/>
 
         <Grid x:Name="GridEmployeeDetails" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Visibility="Hidden">
             <Grid.ColumnDefinitions>
@@ -69,7 +69,7 @@
                 <ComboBoxItem>inactive</ComboBoxItem>
             </ComboBox>
             <Button x:Name="ButtonSubmitNewEmployee" Content="Submit new employee"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonSubmitNewEmployee_Click" Visibility="Collapsed"/>
-            <Button x:Name="ButtonUpdateEmployee" Content="Update"  Grid.Column="1" Grid.Row="4" Margin="5" Visibility="Collapsed" Click="ButtonUpdateEmployee_Click"/>
+            <Button x:Name="ButtonUpdateEmployee" Content="Update"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonUpdateEmployee_Click"/>
 
         </Grid>
         
@@ -93,7 +93,8 @@
 
         </DataGrid>
 
-        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="2" Grid.Row="6" Margin="10" Click="export_Click" Visibility="Hidden"/>
+        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="6" Margin="10" Click="export_Click" Visibility="Hidden"/>
+        <TextBlock Text="Plese select employee to delete or update." Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" Margin="10" Visibility="{Binding Visibility, ElementName=DataGridEmployees}"/>
 
 
 
