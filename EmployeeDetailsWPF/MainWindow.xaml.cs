@@ -18,12 +18,11 @@ namespace EmployeeDetailsWPF
     public partial class MainWindow : Window
     {
 
-        private List<Employee> _employees;
-        public List<Employee> Employees { get { return _employees; } set { _employees = value;} }
+        private List<Employee> employees;
 
-        private Employee _selectedEmployee;
-        public Employee SelectedEmployee { get { return _selectedEmployee; } set { _selectedEmployee = value; } }
+        private Employee selectedEmployee;
 
+        
         public MainWindow()
         {
             
@@ -32,22 +31,23 @@ namespace EmployeeDetailsWPF
 
         }
 
+        
         private async void ButtonSearchCustomer_Click(object sender, RoutedEventArgs e)
         {
             TextBlockMessage.Visibility = Visibility.Visible;
             TextBlockMessage.Text = "Loading ...";
-            DataGridEmployees.Visibility = Visibility.Collapsed;
-            GridEmployeeDetails.Visibility = Visibility.Collapsed;
+            DataGridEmployees.Visibility = Visibility.Hidden;
+            GridEmployeeDetails.Visibility = Visibility.Hidden;
             
             try
             {
-                Employees = await EmployeeProcessor.SearchEmployeesAsync(TextBoxId.Text, TextBoxName.Text);
+                employees = await EmployeeProcessor.SearchEmployeesAsync(TextBoxId.Text, TextBoxName.Text);
 
-                DataGridEmployees.ItemsSource = Employees;
+                DataGridEmployees.ItemsSource = employees;
 
                 ButtonExport.Visibility = Visibility.Visible;
 
-                TextBlockMessage.Visibility = Visibility.Collapsed;
+                TextBlockMessage.Visibility = Visibility.Hidden;
                 DataGridEmployees.Visibility = Visibility.Visible;
 
             }
@@ -68,7 +68,7 @@ namespace EmployeeDetailsWPF
                 using (var writer = new StreamWriter(filename))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
-                    csv.WriteRecords(Employees);
+                    csv.WriteRecords(employees);
                 }
 
                 MessageBox.Show(filename + " created.");
@@ -86,8 +86,11 @@ namespace EmployeeDetailsWPF
         private void ButtonNewEmployee_Click(object sender, RoutedEventArgs e)
         {
             GridEmployeeDetails.Visibility = Visibility.Visible;
-            DataGridEmployees.Visibility = Visibility.Collapsed;
+            DataGridEmployees.Visibility = Visibility.Hidden;
+            
             ButtonSubmitNewEmployee.Visibility = Visibility.Visible;
+            ButtonUpdateEmployee.Visibility = Visibility.Hidden;
+            ButtonExport.Visibility = Visibility.Hidden;
 
             DataGridEmployees.SelectedItem = null;
 
@@ -134,15 +137,19 @@ namespace EmployeeDetailsWPF
 
         private void ButtonSelectUpdateEmployee_Click(object sender, RoutedEventArgs e)
         {
-            SelectedEmployee = (Employee)DataGridEmployees.SelectedItem;
+            selectedEmployee = (Employee)DataGridEmployees.SelectedItem;
 
-            TextBoxNewName.Text = SelectedEmployee.name;
-            TextBoxNewEmail.Text = SelectedEmployee.email;
-            ComboBoxStatus.Text = SelectedEmployee.status;
-            ComboBoxGender.Text = SelectedEmployee.gender;
+            ButtonSubmitNewEmployee.Visibility = Visibility.Hidden;
+            ButtonExport.Visibility = Visibility.Hidden;
+            ButtonUpdateEmployee.Visibility = Visibility.Visible;
+
+            TextBoxNewName.Text = selectedEmployee.name;
+            TextBoxNewEmail.Text = selectedEmployee.email;
+            ComboBoxStatus.Text = selectedEmployee.status;
+            ComboBoxGender.Text = selectedEmployee.gender;
 
             GridEmployeeDetails.Visibility = Visibility.Visible;
-            DataGridEmployees.Visibility = Visibility.Collapsed;
+            DataGridEmployees.Visibility = Visibility.Hidden;
 
             DataGridEmployees.SelectedItem = null;
 
@@ -154,7 +161,7 @@ namespace EmployeeDetailsWPF
         {
             Employee updateEmployee = new()
             {
-                id = SelectedEmployee.id,
+                id = selectedEmployee.id,
                 name = TextBoxNewName.Text,
                 email = TextBoxNewEmail.Text,
                 status = ComboBoxStatus.Text,
@@ -180,7 +187,9 @@ namespace EmployeeDetailsWPF
                 ComboBoxStatus.Text = null;
                 ComboBoxGender.Text = null;
 
-                SelectedEmployee = null;
+                selectedEmployee = null;
+
+                GridEmployeeDetails.Visibility = Visibility.Hidden;
             }
         }
 
@@ -189,16 +198,16 @@ namespace EmployeeDetailsWPF
         private async void ButtonDeleteEmployee_Click(object sender, RoutedEventArgs e)
         {
 
-            SelectedEmployee = (Employee)DataGridEmployees.SelectedItem;
+            selectedEmployee = (Employee)DataGridEmployees.SelectedItem;
 
-            if (SelectedEmployee == null) MessageBox.Show("Please select employee to delete");
+            if (selectedEmployee == null) MessageBox.Show("Please select employee to delete");
             else
             {
                 try
                 {
-                    await EmployeeProcessor.DeleteEmployeeAsync(SelectedEmployee);
+                    await EmployeeProcessor.DeleteEmployeeAsync(selectedEmployee);
 
-                    MessageBox.Show(SelectedEmployee.name + " deleted.");
+                    MessageBox.Show(selectedEmployee.name + " deleted.");
 
                 }
                 catch (Exception ex)

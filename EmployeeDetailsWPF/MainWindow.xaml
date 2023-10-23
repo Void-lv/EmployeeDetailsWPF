@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeDetailsWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="600">
+        Title="MainWindow" Height="600" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
@@ -25,12 +25,11 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Column="2" Grid.Row="1" Text="Employee ID (optional)" Margin="10"/>
-        <TextBlock Grid.Column="3" Grid.Row="1" Text="Employee Name (optional)" Margin="10"/>
+        <TextBlock Grid.Column="2" Grid.Row="1" Text="Employee ID (optional)" Margin="10,10,10,0"/>
+        <TextBlock Grid.Column="3" Grid.Row="1" Text="Employee Name (optional)" Margin="10,10,10,0"/>
         <TextBlock x:Name="TextBlockMessage" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Margin="10" Visibility="Hidden"/>
         
         <TextBox x:Name="TextBoxId" Grid.Column="2" Grid.Row="2" Margin="10"/>
@@ -68,20 +67,20 @@
                 <ComboBoxItem>active</ComboBoxItem>
                 <ComboBoxItem>inactive</ComboBoxItem>
             </ComboBox>
-            <Button x:Name="ButtonSubmitNewEmployee" Content="Submit new employee"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonSubmitNewEmployee_Click" Visibility="Collapsed"/>
-            <Button x:Name="ButtonUpdateEmployee" Content="Update"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonUpdateEmployee_Click"/>
+            <Button x:Name="ButtonSubmitNewEmployee" Content="Submit new employee"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonSubmitNewEmployee_Click" Visibility="Hidden"/>
+            <Button x:Name="ButtonUpdateEmployee" Content="Update"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonUpdateEmployee_Click" Visibility="Hidden"/>
 
         </Grid>
         
         <DataGrid x:Name="DataGridEmployees"
-                ItemsSource="{Binding Employees}"
+                ItemsSource="{Binding employees}"
                 AutoGenerateColumns="False"
                 Grid.Column="1"
                 Grid.Row="4"
                 Grid.ColumnSpan="3"
                 Margin="10"
                 HorizontalAlignment="Left"
-                Visibility="Hidden" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="500">
+                Visibility="Hidden" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="600">
 
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="ColumnId" Header="ID" Binding="{Binding id}"/>
@@ -93,9 +92,7 @@
 
         </DataGrid>
 
-        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="6" Margin="10" Click="export_Click" Visibility="Hidden"/>
-        <TextBlock Text="Plese select employee to delete or update." Grid.Column="2" Grid.Row="6" Grid.ColumnSpan="2" Margin="10" Visibility="{Binding Visibility, ElementName=DataGridEmployees}"/>
-
+        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="7" Margin="10" Click="export_Click" Visibility="Hidden"/>
 
 
     </Grid>
