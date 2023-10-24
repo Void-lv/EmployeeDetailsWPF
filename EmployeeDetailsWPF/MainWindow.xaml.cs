@@ -32,7 +32,7 @@ namespace EmployeeDetailsWPF
         }
 
         
-        private async void ButtonSearchCustomer_Click(object sender, RoutedEventArgs e)
+        private async void ButtonSearchEmployees_Click(object sender, RoutedEventArgs e)
         {
             TextBlockMessage.Visibility = Visibility.Visible;
             TextBlockMessage.Text = "Loading ...";

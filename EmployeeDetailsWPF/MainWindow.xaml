@@ -35,7 +35,7 @@
         <TextBox x:Name="TextBoxId" Grid.Column="2" Grid.Row="2" Margin="10"/>
         <TextBox x:Name="TextBoxName" Grid.Column="3" Grid.Row="2" Margin="10"/>
 
-        <Button x:Name="ButtonSearchEmployee" Content="Search Employee"  Grid.Column="1" Grid.Row="2" Margin="10" Click="ButtonSearchCustomer_Click"/>
+        <Button x:Name="ButtonSearchEmployee" Content="Search Employee"  Grid.Column="1" Grid.Row="2" Margin="10" Click="ButtonSearchEmployees_Click"/>
         <Button x:Name="ButtonNewEmployee" Content="New Employee"  Grid.Column="1" Grid.Row="3" Margin="10" Click="ButtonNewEmployee_Click"/>
         <Button x:Name="ButtonSelectUpdateEmployee" Content="Update Employee"  Grid.Column="2" Grid.Row="3" Margin="10" Click="ButtonSelectUpdateEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}, ConverterParameter=Hidden}"/>
         <Button x:Name="ButtonDeleteEmployee" Content="Delete Employee" Grid.Column="3" Grid.Row="3" Margin="10" Click="ButtonDeleteEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}}"/>
