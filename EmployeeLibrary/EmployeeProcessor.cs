@@ -1,4 +1,6 @@
-﻿namespace EmployeeApiLibrary
+﻿using EmployeeCommonLibrary;
+
+namespace EmployeeApiLibrary
 {
     public class EmployeeProcessor
     {
@@ -48,22 +50,24 @@
         public static async Task AddEmployeeAsync (Employee employee)
         {
             string resource = "users";
+            ApiEmployee apiEmployee = new ApiEmployee(employee);
 
-            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsJsonAsync(resource, employee);
+            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsJsonAsync(resource, apiEmployee);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);
         }
 
         public static async Task UpdateEmployeeAsync(Employee employee)
         {
-            string resource = $"users/{employee.id}";
+            string resource = $"users/{employee.Id}";
+            ApiEmployee apiEmployee = new ApiEmployee(employee);
 
-            using HttpResponseMessage response = await ApiHelper.ApiClient.PutAsJsonAsync(resource, employee);
+            using HttpResponseMessage response = await ApiHelper.ApiClient.PutAsJsonAsync(resource, apiEmployee);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);
         }
 
         public static async Task DeleteEmployeeAsync(Employee employee)
         {
-            string resource = $"users/{employee.id}";
+            string resource = $"users/{employee.Id}";
 
             using HttpResponseMessage response = await ApiHelper.ApiClient.DeleteAsync(resource);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);

@@ -4,15 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EmployeeDetailsWPF"
+        xmlns:edvmns="clr-namespace:EmployeeDetailsViewModel;assembly=EmployeeDetailsViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="700">
+        Title="MainWindow" Height="480" Width="650">
+    <Window.Resources>
+        <edvmns:EmployeeDetailsViewModel x:Key="employeevm"/>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -30,17 +34,17 @@
 
         <TextBlock Grid.Column="2" Grid.Row="1" Text="Employee ID (optional)" Margin="10,10,10,0"/>
         <TextBlock Grid.Column="3" Grid.Row="1" Text="Employee Name (optional)" Margin="10,10,10,0"/>
-        <TextBlock x:Name="TextBlockMessage" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Margin="10" Visibility="Hidden"/>
+        <TextBlock x:Name="DialogMessage" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Text="{Binding DialogueMessage, Source={StaticResource employeevm}}"/>
         
-        <TextBox x:Name="TextBoxId" Grid.Column="2" Grid.Row="2" Margin="10"/>
-        <TextBox x:Name="TextBoxName" Grid.Column="3" Grid.Row="2" Margin="10"/>
+        <TextBox x:Name="TextBoxId" Grid.Column="2" Grid.Row="2" Margin="10" Text="{Binding EmployeeId, Source={StaticResource employeevm}}"/>
+        <TextBox x:Name="TextBoxName" Grid.Column="3" Grid.Row="2" Margin="10" Text="{Binding EmployeeName, Source={StaticResource employeevm}}"/>
 
-        <Button x:Name="ButtonSearchEmployee" Content="Search Employee"  Grid.Column="1" Grid.Row="2" Margin="10" Click="ButtonSearchEmployees_Click"/>
-        <Button x:Name="ButtonNewEmployee" Content="New Employee"  Grid.Column="1" Grid.Row="3" Margin="10" Click="ButtonNewEmployee_Click"/>
-        <Button x:Name="ButtonSelectUpdateEmployee" Content="Update Employee"  Grid.Column="2" Grid.Row="3" Margin="10" Click="ButtonSelectUpdateEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}, ConverterParameter=Hidden}"/>
-        <Button x:Name="ButtonDeleteEmployee" Content="Delete Employee" Grid.Column="3" Grid.Row="3" Margin="10" Click="ButtonDeleteEmployee_Click" Visibility="{Binding SelectedItem, ElementName=DataGridEmployees, Converter={StaticResource NullToVis}}"/>
+        <Button x:Name="ButtonSearchEmployee" Content="Search Employee"  Grid.Column="1" Grid.Row="2" Margin="10" Command="{Binding SearchEmployeesCommand, Source={StaticResource employeevm}}"/>
+        <Button x:Name="ButtonNewEmployee" Content="New Employee"  Grid.Column="1" Grid.Row="3" Margin="10" Command="{Binding PrepareNewEmployeeCommand, Source={StaticResource employeevm}}" />
+        <Button x:Name="ButtonSelectUpdateEmployee" Content="Update Employee"  Grid.Column="2" Grid.Row="3" Margin="10" Visibility="{Binding SelectedEmployee, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}" Command="{Binding PrepareUpdateEmployeeCommand, Source={StaticResource employeevm}}"/>
+        <Button x:Name="ButtonDeleteEmployee" Content="Delete Employee" Grid.Column="3" Grid.Row="3" Margin="10" Visibility="{Binding SelectedEmployee, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}" Command="{Binding DeleteEmployeeCommand, Source={StaticResource employeevm}}"/>
 
-        <Grid x:Name="GridEmployeeDetails" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Visibility="Hidden">
+        <Grid x:Name="GridEmployeeDetails" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" Visibility="{Binding DetailFormActive, Converter={StaticResource BoolToVis}, Source={StaticResource employeevm}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -51,48 +55,52 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Name" Margin="5" Grid.Row="0" Grid.Column="0"/>
-            <TextBox Text="{Binding name, Mode=TwoWay}" x:Name="TextBoxNewName" Margin="5" Grid.Row="0" Grid.Column="1" MinWidth="200"/>
-            <TextBlock Text="Email" Margin="5" Grid.Row="1" Grid.Column="0"/>
-            <TextBox x:Name="TextBoxNewEmail" Margin="5" Grid.Row="1" Grid.Column="1"/>
-            <TextBlock Text="Gender" Margin="5" Grid.Row="2" Grid.Column="0"/>
-            <ComboBox x:Name="ComboBoxGender" Margin="5" Grid.Row="2" Grid.Column="1">
+            <TextBlock Text="Id" Margin="5" Grid.Row="0" Grid.Column="0" Visibility="{Binding ProcessingEmployee.Id, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}" />
+            <TextBox x:Name="Id" Margin="5" Grid.Row="0" Grid.Column="1" MinWidth="200" Text="{Binding ProcessingEmployee.Id, Source={StaticResource employeevm}}" IsInactiveSelectionHighlightEnabled="True" IsEnabled="False" Visibility="{Binding ProcessingEmployee.Id, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}" />
+            <TextBlock Text="Name" Margin="5" Grid.Row="1" Grid.Column="0"/>
+            <TextBox x:Name="NewName" Margin="5" Grid.Row="1" Grid.Column="1" MinWidth="200" Text="{Binding ProcessingEmployee.Name, Source={StaticResource employeevm}}"/>
+            <TextBlock Text="Email" Margin="5" Grid.Row="2" Grid.Column="0"/>
+            <TextBox x:Name="NewEmail" Margin="5" Grid.Row="2" Grid.Column="1" Text="{Binding ProcessingEmployee.Email, Source={StaticResource employeevm}}"/>
+            <TextBlock Text="Gender" Margin="5" Grid.Row="3" Grid.Column="0"/>
+            <ComboBox x:Name="ComboBoxGender" Margin="5" Grid.Row="3" Grid.Column="1" SelectedValuePath="Content" SelectedValue="{Binding ProcessingEmployee.Gender, Source={StaticResource employeevm}}">
                 <ComboBoxItem>male</ComboBoxItem>
                 <ComboBoxItem>female</ComboBoxItem>
             </ComboBox>
-            <TextBlock Text="Status" Margin="5" Grid.Row="3" Grid.Column="0"/>
-            <ComboBox x:Name="ComboBoxStatus" Margin="5" Grid.Row="3" Grid.Column="1">
+            <TextBlock Text="Status" Margin="5" Grid.Row="4" Grid.Column="0"/>
+            <ComboBox x:Name="ComboBoxStatus" Margin="5" Grid.Row="4" Grid.Column="1" SelectedValuePath="Content" SelectedValue="{Binding ProcessingEmployee.Status, Source={StaticResource employeevm}}">
                 <ComboBoxItem>active</ComboBoxItem>
                 <ComboBoxItem>inactive</ComboBoxItem>
             </ComboBox>
-            <Button x:Name="ButtonSubmitNewEmployee" Content="Submit new employee"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonSubmitNewEmployee_Click" Visibility="Hidden"/>
-            <Button x:Name="ButtonUpdateEmployee" Content="Update"  Grid.Column="1" Grid.Row="4" Margin="5" Click="ButtonUpdateEmployee_Click" Visibility="Hidden"/>
+            <Button x:Name="ButtonSubmitNewEmployee" Content="Submit"  Grid.Column="1" Grid.Row="5" Margin="5" Command="{Binding SubmitEmployeeOperationCommand, Source={StaticResource employeevm}}"/>
 
         </Grid>
         
         <DataGrid x:Name="DataGridEmployees"
-                ItemsSource="{Binding employees}"
+                ItemsSource="{Binding EmployeeList, Source={StaticResource employeevm}}"
                 AutoGenerateColumns="False"
                 Grid.Column="1"
                 Grid.Row="4"
                 Grid.ColumnSpan="3"
                 Margin="10"
                 HorizontalAlignment="Left"
-                Visibility="Hidden" CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="600">
+                CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="600"
+                Visibility="{Binding EmployeeList, ConverterParameter=Hidden, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}"
+                SelectedItem="{Binding SelectedEmployee, Source={StaticResource employeevm}}" Width="580">
 
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ColumnId" Header="ID" Binding="{Binding id}"/>
-                <DataGridTextColumn x:Name="ColumnName" Header="Name" Binding="{Binding name}"/>
-                <DataGridTextColumn x:Name="ColumnEmail" Header="Email" Binding="{Binding email}"/>
-                <DataGridTextColumn x:Name="ColumnGender" Header="Gender" Binding="{Binding gender}"/>
-                <DataGridTextColumn x:Name="ColumnStatus" Header="Status" Binding="{Binding status}"/>
+                <DataGridTextColumn x:Name="ColumnId" Header="ID" Binding="{Binding Id}"/>
+                <DataGridTextColumn x:Name="ColumnName" Header="Name" Binding="{Binding Name}"/>
+                <DataGridTextColumn x:Name="ColumnEmail" Header="Email" Binding="{Binding Email}"/>
+                <DataGridTextColumn x:Name="ColumnGender" Header="Gender" Binding="{Binding Gender}"/>
+                <DataGridTextColumn x:Name="ColumnStatus" Header="Status" Binding="{Binding Status}"/>
             </DataGrid.Columns>
 
         </DataGrid>
 
-        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="7" Margin="10" Click="export_Click" Visibility="Hidden"/>
+        <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="7" Margin="10" Command="{Binding ExportCommand, Source={StaticResource employeevm}}" Visibility="{Binding EmployeeList, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}"/>
 
 
     </Grid>
