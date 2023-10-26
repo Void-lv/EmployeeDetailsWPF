@@ -80,25 +80,13 @@
         
         <DataGrid x:Name="DataGridEmployees"
                 ItemsSource="{Binding EmployeeList, Source={StaticResource employeevm}}"
-                AutoGenerateColumns="False"
                 Grid.Column="1"
                 Grid.Row="4"
                 Grid.ColumnSpan="3"
                 Margin="10"
-                HorizontalAlignment="Left"
                 CanUserAddRows="False" CanUserDeleteRows="False" CanUserResizeRows="False" SelectionMode="Single" IsReadOnly="True" MaxHeight="200" MaxWidth="600"
                 Visibility="{Binding EmployeeList, ConverterParameter=Hidden, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}"
-                SelectedItem="{Binding SelectedEmployee, Source={StaticResource employeevm}}" Width="580">
-
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="ColumnId" Header="ID" Binding="{Binding Id}"/>
-                <DataGridTextColumn x:Name="ColumnName" Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn x:Name="ColumnEmail" Header="Email" Binding="{Binding Email}"/>
-                <DataGridTextColumn x:Name="ColumnGender" Header="Gender" Binding="{Binding Gender}"/>
-                <DataGridTextColumn x:Name="ColumnStatus" Header="Status" Binding="{Binding Status}"/>
-            </DataGrid.Columns>
-
-        </DataGrid>
+                SelectedItem="{Binding SelectedEmployee, Source={StaticResource employeevm}}" Width="580" CanUserReorderColumns="False" CanUserResizeColumns="False"/>
 
         <Button x:Name="ButtonExport" Content="Export Results"  Grid.Column="1" Grid.Row="7" Margin="10" Command="{Binding ExportCommand, Source={StaticResource employeevm}}" Visibility="{Binding EmployeeList, Converter={StaticResource NullToVis}, Source={StaticResource employeevm}}"/>
 
