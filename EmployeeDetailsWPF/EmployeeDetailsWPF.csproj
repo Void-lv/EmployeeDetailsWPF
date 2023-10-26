@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EmployeeDetailsViewModel\EmployeeDetailsViewModel.csproj" />
-    <ProjectReference Include="..\EmployeeLibrary\EmployeeApiLibrary.csproj" />
   </ItemGroup>
 
 </Project>
