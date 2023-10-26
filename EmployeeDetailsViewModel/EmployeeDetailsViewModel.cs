@@ -2,6 +2,8 @@
 using EmployeeApiLibrary;
 using EmployeeCommonLibrary;
 using Prism.Commands;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.Metrics;
 using System.Formats.Asn1;
@@ -172,8 +174,8 @@ namespace EmployeeDetailsViewModel
             DialogueMessage = null;     //reset dialog message
             try
             {
-                if (OperationType == "create") await EmployeeProcessor.AddEmployeeAsync(ProcessingEmployee);
-                if (OperationType == "update") await EmployeeProcessor.UpdateEmployeeAsync(ProcessingEmployee);
+                if (OperationType == "create") await EmployeeProcessor.AddEmployeeAsync(new ApiEmployee(ProcessingEmployee));
+                if (OperationType == "update") await EmployeeProcessor.UpdateEmployeeAsync(new ApiEmployee(ProcessingEmployee));
                 DialogueMessage = $"{ProcessingEmployee.Name} {OperationType}d";
             }
             catch (Exception ex)
@@ -186,7 +188,7 @@ namespace EmployeeDetailsViewModel
         {
             try
             {
-                await EmployeeProcessor.DeleteEmployeeAsync(SelectedEmployee);
+                await EmployeeProcessor.DeleteEmployeeAsync(new ApiEmployee(SelectedEmployee));
                 DialogueMessage = $"{SelectedEmployee.Name} deleted.";
 
             }

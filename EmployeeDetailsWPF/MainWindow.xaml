@@ -34,7 +34,7 @@
 
         <TextBlock Grid.Column="2" Grid.Row="1" Text="Employee ID (optional)" Margin="10,10,10,0"/>
         <TextBlock Grid.Column="3" Grid.Row="1" Text="Employee Name (optional)" Margin="10,10,10,0"/>
-        <TextBlock x:Name="DialogMessage" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Text="{Binding DialogueMessage, Source={StaticResource employeevm}}"/>
+        <TextBlock x:Name="DialogMessage" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Text="{Binding DialogueMessage, Source={StaticResource employeevm}}" Foreground="#FFDA0909"/>
         
         <TextBox x:Name="TextBoxId" Grid.Column="2" Grid.Row="2" Margin="10" Text="{Binding EmployeeId, Source={StaticResource employeevm}}"/>
         <TextBox x:Name="TextBoxName" Grid.Column="3" Grid.Row="2" Margin="10" Text="{Binding EmployeeName, Source={StaticResource employeevm}}"/>

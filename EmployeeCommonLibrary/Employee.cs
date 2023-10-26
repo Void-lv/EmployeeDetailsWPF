@@ -1,4 +1,5 @@
-﻿namespace EmployeeCommonLibrary
+﻿
+namespace EmployeeCommonLibrary
 {
     public class Employee
     {

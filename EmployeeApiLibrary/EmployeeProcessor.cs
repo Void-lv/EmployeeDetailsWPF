@@ -14,7 +14,6 @@ namespace EmployeeApiLibrary
 
             string resource = "users";                              // url to get list of employees
 
-            
             if (!string.IsNullOrEmpty(employeeId))
             {
                 resource = $"{resource}/{employeeId}";               // set url to get employee by id
@@ -47,27 +46,25 @@ namespace EmployeeApiLibrary
             }
         }
 
-        public static async Task AddEmployeeAsync (Employee employee)
+        public static async Task AddEmployeeAsync (ApiEmployee employee)
         {
             string resource = "users";
-            ApiEmployee apiEmployee = new ApiEmployee(employee);
 
-            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsJsonAsync(resource, apiEmployee);
+            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsJsonAsync(resource, employee);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);
         }
 
-        public static async Task UpdateEmployeeAsync(Employee employee)
+        public static async Task UpdateEmployeeAsync(ApiEmployee employee)
         {
-            string resource = $"users/{employee.Id}";
-            ApiEmployee apiEmployee = new ApiEmployee(employee);
+            string resource = $"users/{employee.id}";
 
-            using HttpResponseMessage response = await ApiHelper.ApiClient.PutAsJsonAsync(resource, apiEmployee);
+            using HttpResponseMessage response = await ApiHelper.ApiClient.PutAsJsonAsync(resource, employee);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);
         }
 
-        public static async Task DeleteEmployeeAsync(Employee employee)
+        public static async Task DeleteEmployeeAsync(ApiEmployee employee)
         {
-            string resource = $"users/{employee.Id}";
+            string resource = $"users/{employee.id}";
 
             using HttpResponseMessage response = await ApiHelper.ApiClient.DeleteAsync(resource);
             if (!response.IsSuccessStatusCode) throw new Exception(response.ReasonPhrase);
