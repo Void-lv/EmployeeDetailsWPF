@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /EmpoyeeDetailsViewModel
 /EmployeeDetailsWPF.sln
+/UnitTestEmployeeDetails
+/EmployeeTest
