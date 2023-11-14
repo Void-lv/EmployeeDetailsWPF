@@ -14,8 +14,8 @@ namespace EmployeeDetailsViewModel
 {
     public class EmployeeDetailsViewModel : INotifyPropertyChanged
     {
-        private string? employeeId;
-        public string? EmployeeId
+        private string employeeId;
+        public string EmployeeId
         {
             get { return employeeId; }
             set
@@ -24,8 +24,8 @@ namespace EmployeeDetailsViewModel
                 OnPropertyChanged(nameof(EmployeeId));
             }
         }
-        private string? employeeName;
-        public string? EmployeeName
+        private string employeeName;
+        public string EmployeeName
         {
             get { return employeeName; }
             set
@@ -35,8 +35,8 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        private Employee? processingEmployee;
-        public Employee? ProcessingEmployee
+        private Employee processingEmployee;
+        public Employee ProcessingEmployee
         {
             get { return processingEmployee; }
             set
@@ -46,8 +46,8 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        private Employee? selectedEmployee;
-        public Employee? SelectedEmployee
+        private Employee selectedEmployee;
+        public Employee SelectedEmployee
         {
             get { return selectedEmployee; }
             set
@@ -57,8 +57,8 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        private List<Employee>? employeeList;
-        public List<Employee>? EmployeeList
+        private List<Employee> employeeList;
+        public List<Employee> EmployeeList
         {
             get { return employeeList; }
             set
@@ -68,7 +68,7 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        public Employee? newEmployee;
+        public Employee newEmployee;
 
         private bool detailFormActive;
         public bool DetailFormActive
@@ -81,8 +81,8 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        private string? dialogueMessage;
-        public string? DialogueMessage
+        private string dialogueMessage;
+        public string DialogueMessage
         {
             get { return dialogueMessage; }
             set
@@ -92,8 +92,8 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        private string? operationType;
-        public string? OperationType
+        private string operationType;
+        public string OperationType
         {
             get { return operationType; }
             set
@@ -103,7 +103,7 @@ namespace EmployeeDetailsViewModel
             }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private void OnPropertyChanged(string propertyName)
         {
