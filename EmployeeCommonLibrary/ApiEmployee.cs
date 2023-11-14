@@ -9,11 +9,11 @@ namespace EmployeeCommonLibrary
 
     public class ApiEmployee
     {
-        public string? id;
-        public string? name;
-        public string? email;
-        public string? gender;
-        public string? status;
+        public string id;
+        public string name;
+        public string email;
+        public string gender;
+        public string status;
 
         public ApiEmployee(Employee employee)
         {
